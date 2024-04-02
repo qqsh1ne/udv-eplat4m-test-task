@@ -1,30 +1,54 @@
 import cls from './Columns.module.scss';
 import AddingMenu from "./AddingMenu/AddingMenu.tsx";
-import {useState} from "react";
+import React, {FC} from "react";
+import {IWidget} from "../../../types/IWidget.ts";
 
-const Column = () => {
-    const [widgets, setWidgets] = useState<{type: string, id: number}[]>([]);
-    const [currentId, setCurrentId] = useState<number>(0);
-    const handleOnAdd = (widgetType: string) => {
-        setWidgets([...widgets, {type: widgetType, id: currentId}]);
-        setCurrentId(currentId + 1);
+type IColumnProps = {
+    columnId: number,
+    widgets: IWidget[],
+    onAdd: (widgetType: string, columnId: number) => void,
+    onRemove: (widgetId: number) => void,
+    onDragChange: (widgetId: number, columnId: number) => void,
+}
+
+const Column: FC<IColumnProps> = ({columnId, widgets, onAdd, onRemove, onDragChange}) => {
+    const handleOnDrag = (evt: React.DragEvent<HTMLDivElement>, widgetId: number) => {
+        evt.dataTransfer.setData('widgetId', widgetId.toString())
     };
 
-    const handleOnRemove = (widgetId: number) => {
-        setWidgets(widgets.filter(({id}) => id !== widgetId))
+    const handleOnDrop = (evt: React.DragEvent<HTMLDivElement>) => {
+        onDragChange(parseInt(evt.dataTransfer.getData('widgetId')), columnId);
+    }
+
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
     };
 
     return (
-        <div className={cls.column}>
-            <AddingMenu onAdding={handleOnAdd}/>
-            {widgets.map(({type, id}) => (
-                <div key={id}>
-                    {type}
-                    <button onClick={() => {
-                        handleOnRemove(id)
-                    }}>remove</button>
-                </div>
-            ))}
+        <div className={cls.column}
+             onDrop={handleOnDrop}
+             onDragOver={handleDragOver}
+        >
+            <AddingMenu onAdding={onAdd} columnId={columnId}/>
+            {widgets
+                .filter(w => w.columnId === columnId)
+                .map(({type, id}) => (
+                    <div
+                        key={id}
+                        draggable
+                        onDragStart={(evt) => {
+                            handleOnDrag(evt, id)
+                        }}
+                    >
+                        {type}
+                        <button onClick={() => {
+                            onRemove(id)
+                        }}>
+                            remove
+                        </button>
+                    </div>
+                ))
+            }
         </div>
     );
 }

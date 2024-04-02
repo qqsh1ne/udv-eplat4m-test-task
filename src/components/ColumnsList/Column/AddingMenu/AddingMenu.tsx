@@ -1,13 +1,13 @@
 import {Button, Dropdown, MenuProps} from "antd";
 import {FC} from "react";
 
-const AddingMenu: FC<{ onAdding: (type: string) => void}> = ({onAdding}) => {
+const AddingMenu: FC<{ onAdding: (widgetType: string, columnId: number) => void, columnId: number}> = ({onAdding, columnId}) => {
     const items: MenuProps['items'] = [
         {
             key: 'weather',
             label: (
                 <div onClick={() => {
-                    onAdding('weather');
+                    onAdding('weather', columnId);
                 }}>
                     Погода
                 </div>
@@ -17,7 +17,7 @@ const AddingMenu: FC<{ onAdding: (type: string) => void}> = ({onAdding}) => {
             key: 'clocks',
             label: (
                 <div onClick={() => {
-                    onAdding('clocks');
+                    onAdding('clocks', columnId);
                 }}>
                     Часы
                 </div>
@@ -27,7 +27,7 @@ const AddingMenu: FC<{ onAdding: (type: string) => void}> = ({onAdding}) => {
             key: 'currency',
             label: (
                 <div onClick={() => {
-                    onAdding('currency');
+                    onAdding('currency', columnId);
                 }}>
                     Валюта скуратов
                 </div>

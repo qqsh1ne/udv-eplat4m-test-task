@@ -1,0 +1,1 @@
+export const COLUMNS_LIST = 3;
