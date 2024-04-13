@@ -1,17 +1,19 @@
 import cls from './Columns.module.scss';
 import AddingMenu from "./AddingMenu/AddingMenu.tsx";
 import React, {FC} from "react";
-import {IWidget} from "../../../types/IWidget.ts";
+import {IWidgetItem, WidgetSettings} from "../../../types/IWidgetItem.ts";
+import Widget from "../../Widgets/Widget.tsx";
 
 type IColumnProps = {
     columnId: number,
-    widgets: IWidget[],
-    onAdd: (widgetType: string, columnId: number) => void,
+    widgets: IWidgetItem[],
+    onAdd: (widget: Omit<IWidgetItem, 'id'>) => void,
     onRemove: (widgetId: number) => void,
     onDragChange: (widgetId: number, columnId: number) => void,
+    onSettingsChange: (widgetId: number, settings: WidgetSettings) => void,
 }
 
-const Column: FC<IColumnProps> = ({columnId, widgets, onAdd, onRemove, onDragChange}) => {
+const Column: FC<IColumnProps> = ({columnId, widgets, onAdd, onRemove, onDragChange, onSettingsChange}) => {
     const handleOnDrag = (evt: React.DragEvent<HTMLDivElement>, widgetId: number) => {
         evt.dataTransfer.setData('widgetId', widgetId.toString())
     };
@@ -31,22 +33,15 @@ const Column: FC<IColumnProps> = ({columnId, widgets, onAdd, onRemove, onDragCha
         >
             <AddingMenu onAdding={onAdd} columnId={columnId}/>
             {widgets
-                .filter(w => w.columnId === columnId)
-                .map(({type, id}) => (
-                    <div
-                        key={id}
-                        draggable
-                        onDragStart={(evt) => {
-                            handleOnDrag(evt, id)
-                        }}
-                    >
-                        {type}
-                        <button onClick={() => {
-                            onRemove(id)
-                        }}>
-                            remove
-                        </button>
-                    </div>
+                .filter(widget => widget.columnId === columnId)
+                .map((widget) => (
+                    <Widget
+                        key={widget.id}
+                        widget={widget}
+                        onDrag={handleOnDrag}
+                        onRemove={onRemove}
+                        onSettingsChange={onSettingsChange}
+                    />
                 ))
             }
         </div>

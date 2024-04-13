@@ -1,0 +1,61 @@
+.widget {
+  width: 100%;
+  border-radius: 20px;
+  background: linear-gradient(#0184d2, #c9d97f);
+  padding: 20px 0 30px;
+}
+
+.innerWrapper {
+  width: 80%;
+  margin: 0 auto;
+  color: #ffffff;
+}
+
+.city {
+  display: block;
+
+  margin-bottom: 15px;
+}
+
+.temperature {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-size: 40px;
+  line-height: 40px;
+
+  @media screen and (max-width: 850px) {
+    font-size: 35px;
+    line-height: 35px;
+  }
+}
+
+.temperatureRange {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  font-size: 20px;
+  line-height: 20px;
+
+  @media screen and (max-width: 850px) {
+    font-size: 16px;
+    line-height: 16px;
+  }
+}
+
+.infoBlock {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 10px;
+
+  font-size: 18px;
+  line-height: 18px;
+
+  @media screen and (max-width: 850px) {
+    font-size: 15px;
+    line-height: 15px;
+  }
+}
