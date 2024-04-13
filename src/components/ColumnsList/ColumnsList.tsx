@@ -1,15 +1,15 @@
 import Column from "./Column/Column.tsx";
 import cls from './ColumnsList.module.scss';
 import {useState} from "react";
-import {IWidget} from "../../types/IWidget.ts";
+import {IWidgetItem, WidgetSettings} from "../../types/IWidgetItem.ts";
 import {COLUMNS_LIST} from "../../consts.ts";
 
 const ColumnsList = () => {
-    const [widgets, setWidgets] = useState<IWidget[]>([]);
+    const [widgets, setWidgets] = useState<IWidgetItem[]>([]);
     const [currentId, setCurrentId] = useState<number>(0);
 
-    const handleOnAdd = (widgetType: string, columnId: number) => {
-        setWidgets([...widgets, {type: widgetType, id: currentId, columnId}]);
+    const handleOnAdd = (widget: Omit<IWidgetItem, 'id'>) => {
+        setWidgets([...widgets, {...widget, id: currentId}]);
         setCurrentId(currentId + 1);
     };
 
@@ -18,13 +18,19 @@ const ColumnsList = () => {
     };
 
     const handleOnDragChanges = (widgetId: number, columnId: number) => {
-        const widget = widgets.find(w => w.id === widgetId) as IWidget;
+        const widget = widgets.find(w => w.id === widgetId)!;
         if (widget.columnId === columnId) {
             return;
         }
         widget.columnId = columnId;
         setWidgets([...widgets.filter(w => w.id !== widget.id), widget])
-    }
+    };
+
+    const handleOnSettingsChange = (widgetId: number, settings: WidgetSettings) => {
+        let widget = widgets.find(({id}) => id === widgetId)!;
+        widget = {...widget, settings};
+        setWidgets([...widgets.filter(widget => widget.id !== widgetId), widget])
+    };
 
     return (
         <div className={cls.list}>
@@ -36,6 +42,7 @@ const ColumnsList = () => {
                     onAdd={handleOnAdd}
                     onRemove={handleOnRemove}
                     onDragChange={handleOnDragChanges}
+                    onSettingsChange={handleOnSettingsChange}
                 />
             ))}
         </div>

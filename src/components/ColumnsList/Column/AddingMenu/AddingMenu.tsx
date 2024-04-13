@@ -1,35 +1,27 @@
 import {Button, Dropdown, MenuProps} from "antd";
 import {FC} from "react";
+import WidgetType from "../../../../enums/WidgetType.ts";
+import {IWidgetItem} from "../../../../types/IWidgetItem.ts";
 
-const AddingMenu: FC<{ onAdding: (widgetType: string, columnId: number) => void, columnId: number}> = ({onAdding, columnId}) => {
+const AddingMenu: FC<{ onAdding: (widget: Omit<IWidgetItem, 'id'>) => void, columnId: number}> = ({onAdding, columnId}) => {
     const items: MenuProps['items'] = [
         {
-            key: 'weather',
+            key: WidgetType.Weather,
             label: (
                 <div onClick={() => {
-                    onAdding('weather', columnId);
+                    onAdding({type: WidgetType.Weather, columnId: columnId, settings: {city: 'Екатеринбург'}});
                 }}>
                     Погода
                 </div>
             ),
         },
         {
-            key: 'clocks',
+            key: WidgetType.Clocks,
             label: (
                 <div onClick={() => {
-                    onAdding('clocks', columnId);
+                    onAdding({type: WidgetType.Clocks, columnId: columnId, settings: {}});
                 }}>
                     Часы
-                </div>
-            ),
-        },
-        {
-            key: 'currency',
-            label: (
-                <div onClick={() => {
-                    onAdding('currency', columnId);
-                }}>
-                    Валюта скуратов
                 </div>
             ),
         },
