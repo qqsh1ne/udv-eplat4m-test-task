@@ -1,4 +1,4 @@
-import cls from './Columns.module.scss';
+import cls from './Column.module.scss';
 import AddingMenu from "./AddingMenu/AddingMenu.tsx";
 import React, {FC} from "react";
 import {IWidgetItem, WidgetSettings} from "../../../types/IWidgetItem.ts";
