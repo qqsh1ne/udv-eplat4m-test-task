@@ -27,9 +27,9 @@ const ColumnsList = () => {
     };
 
     const handleOnSettingsChange = (widgetId: number, settings: WidgetSettings) => {
-        let widget = widgets.find(({id}) => id === widgetId)!;
-        widget = {...widget, settings};
-        setWidgets([...widgets.filter(widget => widget.id !== widgetId), widget])
+        const widgetIndex = widgets.findIndex(({id}) => id === widgetId)!;
+        widgets.splice(widgetIndex, 1, {...widgets[widgetIndex], settings});
+        setWidgets([...widgets]);
     };
 
     return (

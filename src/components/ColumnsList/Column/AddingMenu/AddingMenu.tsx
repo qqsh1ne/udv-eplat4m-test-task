@@ -19,7 +19,7 @@ const AddingMenu: FC<{ onAdding: (widget: Omit<IWidgetItem, 'id'>) => void, colu
             key: WidgetType.Clocks,
             label: (
                 <div onClick={() => {
-                    onAdding({type: WidgetType.Clocks, columnId: columnId, settings: {}});
+                    onAdding({type: WidgetType.Clocks, columnId: columnId, settings: {timezone: 'Asia/Yekaterinburg'}});
                 }}>
                     Часы
                 </div>
