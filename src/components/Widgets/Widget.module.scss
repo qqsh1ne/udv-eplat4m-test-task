@@ -8,3 +8,23 @@
     min-width: 150px;
   }
 }
+
+.deleteBtn {
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid #000;
+  padding: 5px;
+  transition: border-bottom-color .2s ease-in-out,
+              border-left-color .2s ease-in-out,
+              border-right-color .2s ease-in-out,
+              border-top-color .2s ease-in-out;
+
+  &:hover {
+    border: 1px solid #4191ff;
+
+  }
+
+  &:active {
+    border: 1px solid #006bff;
+  }
+}

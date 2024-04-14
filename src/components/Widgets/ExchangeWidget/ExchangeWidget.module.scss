@@ -1,0 +1,71 @@
+.widget {
+  width: 100%;
+  background: linear-gradient(rgba(142, 198, 255, 0.6), rgba(91, 135, 169, 0.6));
+  padding: 20px 0 30px;
+
+  border-radius: 20px;
+}
+
+.innerWrapper {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.currency {
+  width: 75px;
+}
+
+.infoBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+
+  font-size: 18px;
+  color: #000000;
+
+  @media screen and (max-width: 850px) and (min-width: 601px) {
+    font-size: 16px;
+    line-height: 16px;
+
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+  }
+
+  @media screen and (max-width: 300px){
+    font-size: 16px;
+    line-height: 16px;
+
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.name {
+  text-align: end;
+
+  @media screen and (max-width: 850px) and (min-width: 601px) {
+    text-align: start;
+  }
+}
+
+.modeSelector {
+  @media screen and (max-width: 760px) and (min-width: 601px) {
+    label {
+      padding: 0 5px;
+    }
+  }
+}
+
+.price {
+  display: flex;
+}

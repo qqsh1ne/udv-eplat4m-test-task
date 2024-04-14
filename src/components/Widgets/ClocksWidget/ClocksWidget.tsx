@@ -1,8 +1,8 @@
 import {FC, useEffect, useState} from "react";
-import {ITypedWidgetProps} from "../Widget.tsx";
 import cls from './ClocksWidget.module.scss';
 import {allTimezones, useTimezoneSelect} from "react-timezone-select";
 import {Select} from "antd";
+import {ITypedWidgetProps} from "../../../types/IWidgetProps.ts";
 
 const labelStyle = 'original';
 const timezones = {

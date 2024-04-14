@@ -1,9 +1,9 @@
 import cls from './WeatherWidget.module.scss';
 import {Select} from "antd";
 import {FC, useEffect, useState} from "react";
-import {ITypedWidgetProps} from "../Widget.tsx";
 import {capitalize} from "../../../util.ts";
 import {CITIES} from "../../../consts.ts";
+import {ITypedWidgetProps} from "../../../types/IWidgetProps.ts";
 
 interface IForecast {
     [key: string]: number | string;
@@ -46,27 +46,27 @@ const WeatherWidget: FC<ITypedWidgetProps> = ({settings, onSettingsChange}) => {
                     {!isError &&
                         <>
                             <div className={cls.temperature}>
-                                <p>{forecast.temp ? Math.round(forecast.temp as number) : ''}°</p>
+                                <p>{forecast.temp ? Math.round(forecast.temp as number) : 0}°</p>
                                 <div className={cls.temperatureRange}>
-                                    <p>↑{forecast.temp_max ? Math.ceil(forecast.temp_max as number) : ''}°</p>
-                                    <p>↓{forecast.temp_min ? Math.floor(forecast.temp_min as number) : ''}°</p>
+                                    <p>↑{forecast.temp_max ? Math.ceil(forecast.temp_max as number) : 0}°</p>
+                                    <p>↓{forecast.temp_min ? Math.floor(forecast.temp_min as number) : 0}°</p>
                                 </div>
                             </div>
                             <div className={cls.infoBlock}>
                                 <p>Влажность</p>
-                                <p>{forecast.humidity ? forecast.humidity : ''}%</p>
+                                <p>{forecast.humidity ? forecast.humidity : 0}%</p>
                             </div>
                             <div className={cls.infoBlock}>
                                 <p>Ветер</p>
-                                <p>{forecast.wind ? forecast.wind : ''} м/с</p>
+                                <p>{forecast.wind ? forecast.wind : 0} м/с</p>
                             </div>
                             <div className={cls.infoBlock}>
                                 <p>Ощущается как</p>
-                                <p>{forecast.feels_like ? Math.round(forecast.feels_like as number) : ''}°</p>
+                                <p>{forecast.feels_like ? Math.round(forecast.feels_like as number) : 0}°</p>
                             </div>
                             <div className={cls.infoBlock}>
                                 <p>Облачность</p>
-                                <p>{forecast.clouds ? forecast.clouds : ''}%</p>
+                                <p>{forecast.clouds ? forecast.clouds : 0}%</p>
                             </div>
                             <div className={cls.infoBlock}>
                                 {forecast.description ? capitalize(forecast.description as string) : ''}

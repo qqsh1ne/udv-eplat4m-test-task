@@ -1,12 +1,21 @@
 import Column from "./Column/Column.tsx";
 import cls from './ColumnsList.module.scss';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {IWidgetItem, WidgetSettings} from "../../types/IWidgetItem.ts";
 import {COLUMNS_LIST} from "../../consts.ts";
 
+const getInitialState = () => {
+    const widgets = localStorage.getItem('widgetsList');
+    return widgets ? JSON.parse(widgets) : []
+}
+
 const ColumnsList = () => {
-    const [widgets, setWidgets] = useState<IWidgetItem[]>([]);
+    const [widgets, setWidgets] = useState<IWidgetItem[]>(getInitialState());
     const [currentId, setCurrentId] = useState<number>(0);
+
+    useEffect(() => {
+        localStorage.setItem('widgetsList', JSON.stringify(widgets));
+    });
 
     const handleOnAdd = (widget: Omit<IWidgetItem, 'id'>) => {
         setWidgets([...widgets, {...widget, id: currentId}]);
@@ -14,7 +23,7 @@ const ColumnsList = () => {
     };
 
     const handleOnRemove = (widgetId: number) => {
-        setWidgets(widgets.filter(({id}) => id !== widgetId))
+        setWidgets(widgets.filter(({id}) => id !== widgetId));
     };
 
     const handleOnDragChanges = (widgetId: number, columnId: number) => {
@@ -23,7 +32,7 @@ const ColumnsList = () => {
             return;
         }
         widget.columnId = columnId;
-        setWidgets([...widgets.filter(w => w.id !== widget.id), widget])
+        setWidgets([...widgets.filter(w => w.id !== widget.id), widget]);
     };
 
     const handleOnSettingsChange = (widgetId: number, settings: WidgetSettings) => {
